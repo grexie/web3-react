@@ -393,18 +393,18 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
-"@grexie/compose@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@grexie/compose/-/compose-0.1.6.tgz#d83edeee901ca136d3033505049ca1faaa106a3d"
-  integrity sha512-quTPgSEeQP+DP7Sf7ba+Iw4jGvNWHHIpSD/LX/CyJ6sWyqqs4Il9l/Ny9W1sNGqhsFYWZZkA228ZjpX+Yo/4UA==
+"@grexie/compose@>=0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@grexie/compose/-/compose-0.1.7.tgz#40345d82cf7fe5df242b8ac53cd6fab517f0e170"
+  integrity sha512-xMtU2Y3gxWCYe46kuzbRPnRyyn0+9QYPifG847ccEjfez+Z9j/DN53iv02riUzDn0Fb2+CRXGxxeS15LKhn1Uw==
 
-"@grexie/refetch@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@grexie/refetch/-/refetch-0.1.2.tgz#91f52312daa8bb0b8796f79f876732d2655c62f0"
-  integrity sha512-gm+NvUZUiu7Xz/AZaJtz3S3LJ+diz+pBnrGCozKXDk9Ffi4dcVzg4GA0bDGQTzJpja5RBO8UHh2KOqDp76oWYg==
+"@grexie/refetch@>=0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@grexie/refetch/-/refetch-0.1.3.tgz#dcda781061c83cd4c06884021045636152ec9597"
+  integrity sha512-tTAgvOiECkhopwI8/ZqyRa2sMxekq3nePeZJ8pcGY2SnejeMCk/SRsanM3whHaxZFpSGHtgIUE1sW8maft5bxQ==
   dependencies:
-    "@grexie/compose" "^0.1.6"
-    events "^3.3.0"
+    "@grexie/compose" ">=0.1.7"
+    events ">=3.3.0"
 
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
@@ -464,10 +464,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
-"@types/react@^16.8.0":
-  version "16.14.23"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.23.tgz#37201b9f2324c5ff8fa4600dbf19079dfdffc880"
-  integrity sha512-WngBZLuSkP4IAgPi0HOsGCHo6dn3CcuLQnCfC17VbA7YBgipZiZoTOhObwl/93DsFW0Y2a/ZXeonpW4DxirEJg==
+"@types/react@>=16.8.0":
+  version "17.0.40"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.40.tgz#dc010cee6254d5239a138083f3799a16638e6bad"
+  integrity sha512-UrXhD/JyLH+W70nNSufXqMZNuUD2cXHu6UjCllC6pmOQgBX4SGXOH8fjRka0O0Ee0HrFxapDD8Bwn81Kmiz6jQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -631,7 +631,7 @@
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@walletconnect/web3-provider@^1.7.4":
+"@walletconnect/web3-provider@>=1.7.4":
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.7.4.tgz#83cdfe9470fc7106538af81fee4de8fb279c7bb3"
   integrity sha512-VyHyUTx8ovrMRPs0VaMLXUjaG5eNbpK1ZWj+8frOJA18jpgDmtmAVccj0oUukAxuhVTnLZR10KGs0Kd8oWWNTA==
@@ -1866,7 +1866,7 @@ eventemitter3@4.0.7:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-events@^3.0.0, events@^3.3.0:
+events@>=3.3.0, events@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
@@ -3303,7 +3303,15 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react@^16.8.0, react@^16.8.6:
+react@>=16.8.0:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+react@^16.8.6:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
@@ -4199,7 +4207,7 @@ web3-utils@1.7.1:
     randombytes "^2.1.0"
     utf8 "3.0.0"
 
-web3@^1.7.1:
+web3@>=1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/web3/-/web3-1.7.1.tgz#4d01371a2c0c07dba089f8009dabd2b11821c5e8"
   integrity sha512-RKVdyZ5FuVEykj62C1o2tc0teJciSOh61jpVB9yb344dBHO3ZV4XPPP24s/PPqIMXmVFN00g2GD9M/v1SoHO/A==
@@ -4212,7 +4220,7 @@ web3@^1.7.1:
     web3-shh "1.7.1"
     web3-utils "1.7.1"
 
-web3modal@^1.9.5:
+web3modal@>=1.9.5:
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/web3modal/-/web3modal-1.9.5.tgz#a1d6351a11358b376af5772f79f3dcdba6c38d1b"
   integrity sha512-L5ME6zgoaCDa+T66skW9WpxGOJX6vU9v+7aLacoQJhU3AMTk784ionpX+Pg4UdhdM+UQW+odge32GkwEX11czQ==
