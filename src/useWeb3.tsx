@@ -93,11 +93,13 @@ const createWeb3Modal = (urls: Web3RpcUrls) =>
     : null;
 
 interface Web3ProviderProps {
+  provider?: any;
   defaultChain?: number;
   urls: Web3RpcUrls;
 }
 
 const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
+  provider,
   defaultChain,
   urls,
   children,
@@ -118,14 +120,18 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     if (defaultChain) {
       setChainId(defaultChain);
       setNetworkId(defaultChain);
-      setWeb3(new Web3(new Web3.providers.HttpProvider(urls[defaultChain])));
+      const _provider =
+        provider ?? new Web3.providers.HttpProvider(urls[defaultChain]);
+      const web3 = new Web3();
+      subscribe(_provider, web3);
+      setWeb3(web3);
     } else {
       setChainId(null);
       setNetworkId(null);
       setWeb3(null);
     }
     setConnected(false);
-  }, []);
+  }, [provider]);
 
   const subscribe = useCallback(
     (provider, web3) => {
@@ -180,7 +186,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
 
   useEffect(() => {
     reset();
-  }, [reset]);
+  }, [reset, provider]);
 
   useEffect(() => {
     if (web3Modal && web3Modal.cachedProvider) {
