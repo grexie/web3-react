@@ -122,7 +122,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
       setNetworkId(defaultChain);
       const _provider =
         provider ?? new Web3.providers.HttpProvider(urls[defaultChain]);
-      const web3 = new Web3();
+      const web3 = new Web3(_provider);
       subscribe(_provider, web3);
       setWeb3(web3);
     } else {
