@@ -135,19 +135,19 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
 
   const subscribe = useCallback(
     (provider, web3) => {
-      provider?.on('close', reset);
-      provider?.on('accountsChanged', (accounts: string[]) => {
+      provider.on?.('close', reset);
+      provider.on?.('accountsChanged', (accounts: string[]) => {
         setAccount(web3.utils.toChecksumAddress(accounts[0]));
         if (!accounts[0]) {
           reset();
         }
       });
-      provider?.on('chainChanged', async (chainId: string) => {
+      provider.on?.('chainChanged', async (chainId: string) => {
         const networkId = await web3.eth.net.getId();
         setChainId(Number(chainId));
         setNetworkId(Number(networkId));
       });
-      provider?.on('networkChanged', async (networkId: string) => {
+      provider.on?.('networkChanged', async (networkId: string) => {
         const chainId = await web3.eth.getChainId();
         setChainId(Number(chainId));
         setNetworkId(Number(networkId));
