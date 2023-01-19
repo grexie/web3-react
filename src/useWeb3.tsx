@@ -93,7 +93,7 @@ const createWeb3Modal = (urls: Web3RpcUrls) =>
     : null;
 
 interface Web3ProviderProps {
-  provider?: any;
+  provider?: (chainId: number) => any;
   defaultChain?: number;
   urls: Web3RpcUrls;
 }
@@ -115,26 +115,30 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
 
-  const reset = useCallback(() => {
-    setAccount(null);
-    if (defaultChain) {
-      setChainId(defaultChain);
-      setNetworkId(defaultChain);
-      const _provider =
-        provider ?? new Web3.providers.HttpProvider(urls[defaultChain]);
-      const web3 = new Web3(_provider);
-      subscribe(_provider, web3);
-      setWeb3(web3);
-    } else {
-      setChainId(null);
-      setNetworkId(null);
-      setWeb3(null);
-    }
-    setConnected(false);
-  }, [provider]);
+  const reset = useCallback(
+    async (canceller?: { cancel: boolean }) => {
+      setAccount(null);
+      if (defaultChain) {
+        setChainId(defaultChain);
+        setNetworkId(defaultChain);
+        const _provider =
+          provider?.(defaultChain) ??
+          new Web3.providers.HttpProvider(urls[defaultChain]);
+        const web3 = new Web3(_provider);
+        setWeb3(web3);
+        await subscribe(_provider, web3, canceller);
+      } else {
+        setChainId(null);
+        setNetworkId(null);
+        setWeb3(null);
+      }
+      setConnected(false);
+    },
+    [provider]
+  );
 
   const subscribe = useCallback(
-    (provider, web3) => {
+    async (provider, web3, canceller?: { cancel: boolean }) => {
       provider.on?.('close', reset);
       provider.on?.('accountsChanged', (accounts: string[]) => {
         setAccount(web3.utils.toChecksumAddress(accounts[0]));
@@ -152,6 +156,20 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
         setChainId(Number(chainId));
         setNetworkId(Number(networkId));
       });
+
+      const accounts = await web3.eth.getAccounts();
+      const account = web3.utils.toChecksumAddress(accounts[0]);
+      const networkId = await web3.eth.net.getId();
+      const chainId = await web3.eth.getChainId();
+
+      if (canceller?.cancel) {
+        return;
+      }
+
+      setAccount(account);
+      setNetworkId(Number(networkId));
+      setChainId(Number(chainId));
+      setConnected(true);
     },
     [reset]
   );
@@ -171,21 +189,17 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     const web3 = new Web3(provider);
     setWeb3(web3);
 
-    subscribe(provider, web3);
-
-    const accounts = await web3.eth.getAccounts();
-    const account = web3.utils.toChecksumAddress(accounts[0]);
-    const networkId = await web3.eth.net.getId();
-    const chainId = await web3.eth.getChainId();
-
-    setAccount(account);
-    setNetworkId(Number(networkId));
-    setChainId(Number(chainId));
-    setConnected(true);
+    await subscribe(provider, web3);
   }, [web3Modal, subscribe]);
 
   useEffect(() => {
-    reset();
+    let canceller = { cancel: false };
+
+    reset(canceller).catch(err => console.error(err));
+
+    return () => {
+      canceller.cancel = true;
+    };
   }, [reset, provider]);
 
   useEffect(() => {
