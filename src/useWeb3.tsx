@@ -94,7 +94,7 @@ const createWeb3Modal = (urls: Web3RpcUrls, provider?: any) => {
       : null;
 
   if (web3Modal && provider) {
-    web3Modal.cachedProvider = provider;
+    (web3Modal as any).cachedProvider = provider;
   }
 
   return web3Modal;
@@ -120,8 +120,8 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const web3Modal = useMemo(
-    () => createWeb3Modal(urls, provider?.(chainId)),
-    [provider, chainId]
+    () => createWeb3Modal(urls, provider?.(chainId ?? defaultChain)),
+    [provider, defaultChain, chainId]
   );
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
