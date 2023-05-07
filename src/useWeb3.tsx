@@ -176,10 +176,6 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   );
 
   const connect = useCallback(async () => {
-    if (connected) {
-      return;
-    }
-
     if (!web3Modal) {
       throw new Error(
         'Web3Modal not instantiated, are you running in a browser?'
@@ -208,10 +204,20 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   }, [reset, provider]);
 
   useEffect(() => {
-    if (web3Modal && web3Modal.cachedProvider) {
-      connect();
+    if (connected) {
+      return;
     }
-  }, [web3Modal, connect]);
+
+    const immediate = setImmediate(() => {
+      if (web3Modal && web3Modal.cachedProvider) {
+        connect();
+      }
+    });
+
+    return () => {
+      clearImmediate(immediate);
+    };
+  }, [web3Modal, connect, connected]);
 
   const disconnect = useCallback(async () => {
     web3Modal?.clearCachedProvider?.();
