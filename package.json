@@ -1,6 +1,6 @@
 {
   "name": "@grexie/web3-react",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "license": "MIT",
   "repository": "github:grexie/web3-react",
   "main": "lib/cjs/index.js",
