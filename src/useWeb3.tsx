@@ -123,7 +123,8 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     () =>
       createWeb3Modal(
         urls,
-        (chainId ?? defaultChain) && provider?.(chainId ?? defaultChain)
+        (chainId ?? defaultChain) &&
+          provider?.((chainId ?? defaultChain) as any)
       ),
     [provider, defaultChain, chainId]
   );
