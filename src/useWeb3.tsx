@@ -120,7 +120,11 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const web3Modal = useMemo(
-    () => createWeb3Modal(urls, provider?.(chainId ?? defaultChain)),
+    () =>
+      createWeb3Modal(
+        urls,
+        (chainId ?? defaultChain) && provider?.(chainId ?? defaultChain)
+      ),
     [provider, defaultChain, chainId]
   );
 
