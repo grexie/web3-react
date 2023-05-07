@@ -37,7 +37,7 @@ jobs:
       - if: steps.cache-modules.outputs.cache-hit != 'true'
         run: yarn
       - run: yarn build
-      - uses: mikeal/merge-release@master
+      - run: npx release-it
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
