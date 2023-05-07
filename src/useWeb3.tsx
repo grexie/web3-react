@@ -76,21 +76,29 @@ interface Web3RpcUrls {
   [chain: number]: string;
 }
 
-const createWeb3Modal = (urls: Web3RpcUrls) =>
-  typeof window !== 'undefined'
-    ? new Web3Modal({
-        cacheProvider: true,
-        providerOptions: {
-          walletconnect: {
-            package: WalletConnectProvider,
-            options: {
-              rpc: urls,
+const createWeb3Modal = (urls: Web3RpcUrls, provider?: any) => {
+  const web3Modal =
+    typeof window !== 'undefined'
+      ? new Web3Modal({
+          cacheProvider: true,
+          providerOptions: {
+            walletconnect: {
+              package: WalletConnectProvider,
+              options: {
+                rpc: urls,
+              },
             },
           },
-        },
-        disableInjectedProvider: false,
-      })
-    : null;
+          disableInjectedProvider: false,
+        })
+      : null;
+
+  if (web3Modal && provider) {
+    web3Modal.cachedProvider = provider;
+  }
+
+  return web3Modal;
+};
 
 interface Web3ProviderProps {
   provider?: (chainId: number) => any;
@@ -111,7 +119,10 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [networkId, setNetworkId] = useState<number | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const web3Modal = useMemo(() => createWeb3Modal(urls), []);
+  const web3Modal = useMemo(
+    () => createWeb3Modal(urls, provider?.(chainId)),
+    [provider, chainId]
+  );
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
 
