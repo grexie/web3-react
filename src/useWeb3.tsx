@@ -176,6 +176,10 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   );
 
   const connect = useCallback(async () => {
+    if (connected) {
+      return;
+    }
+
     if (!web3Modal) {
       throw new Error(
         'Web3Modal not instantiated, are you running in a browser?'
@@ -191,7 +195,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     setWeb3(web3);
 
     await subscribe(provider, web3);
-  }, [web3Modal, subscribe]);
+  }, [web3Modal, subscribe, connected]);
 
   useEffect(() => {
     let canceller = { cancel: false };
