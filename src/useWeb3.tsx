@@ -76,29 +76,21 @@ interface Web3RpcUrls {
   [chain: number]: string;
 }
 
-const createWeb3Modal = (urls: Web3RpcUrls, provider?: any) => {
-  const web3Modal =
-    typeof window !== 'undefined'
-      ? new Web3Modal({
-          cacheProvider: true,
-          providerOptions: {
-            walletconnect: {
-              package: WalletConnectProvider,
-              options: {
-                rpc: urls,
-              },
+const createWeb3Modal = (urls: Web3RpcUrls) =>
+  typeof window !== 'undefined'
+    ? new Web3Modal({
+        cacheProvider: true,
+        providerOptions: {
+          walletconnect: {
+            package: WalletConnectProvider,
+            options: {
+              rpc: urls,
             },
           },
-          disableInjectedProvider: false,
-        })
-      : null;
-
-  if (web3Modal && provider) {
-    (web3Modal as any).cachedProvider = provider;
-  }
-
-  return web3Modal;
-};
+        },
+        disableInjectedProvider: false,
+      })
+    : null;
 
 interface Web3ProviderProps {
   provider?: (chainId: number) => any;
@@ -119,15 +111,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [networkId, setNetworkId] = useState<number | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const web3Modal = useMemo(
-    () =>
-      createWeb3Modal(
-        urls,
-        (chainId ?? defaultChain) &&
-          provider?.((chainId ?? defaultChain) as any)
-      ),
-    [provider, defaultChain, chainId]
-  );
+  const web3Modal = useMemo(() => createWeb3Modal(urls), []);
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
 
@@ -142,13 +126,14 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
           new Web3.providers.HttpProvider(urls[defaultChain]);
         const web3 = new Web3(_provider);
         setWeb3(web3);
+        setConnected(false);
         await subscribe(_provider, web3, canceller);
       } else {
         setChainId(null);
         setNetworkId(null);
         setWeb3(null);
+        setConnected(false);
       }
-      setConnected(false);
     },
     [provider]
   );
