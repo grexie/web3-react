@@ -13,6 +13,13 @@ import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
+export interface Web3Metadata {
+  name: string;
+  description: string;
+  url: string;
+  icons: string[];
+}
+
 interface Web3Context {
   web3: Web3 | null;
   connect: () => Promise<void>;
@@ -79,6 +86,7 @@ interface Web3ProviderProps {
   provider?: (chainId: number) => any;
   defaultChain?: number;
   urls: Web3RpcUrls;
+  metadata: Web3Metadata;
   projectId: string;
 }
 
@@ -87,6 +95,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   defaultChain,
   urls,
   projectId,
+  metadata,
   children,
 }) => {
   defaultChain = defaultChain ? Number(defaultChain) : undefined;
@@ -162,6 +171,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const connect = useCallback(async () => {
     const provider = await EthereumProvider.init({
       projectId,
+      metadata,
       chains: [defaultChain!],
       optionalChains: Object.keys(urls).map(x => Number(x)),
       showQrModal: true,
@@ -172,7 +182,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     setWeb3(web3);
 
     await subscribe(provider, web3);
-  }, [subscribe, connected]);
+  }, [projectId, metadata, subscribe, connected]);
 
   useEffect(() => {
     let canceller = { cancel: false };
