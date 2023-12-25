@@ -174,7 +174,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
       metadata,
       chains: [defaultChain!],
       optionalChains: Object.keys(urls).map(x => Number(x)),
-      showQrModal: true,
+      showQrModal: false,
       rpcMap: urls as any,
     });
     await provider.enable();
