@@ -69,7 +69,7 @@ const useWeb3Query = <
           const params = { from: ZERO_ADDRESS, ...options };
           let call: Web3Method;
           if (contract === web3 || contract === 'web3') {
-            call = web3.eth[method].request(
+            call = (web3.eth as any)[method].request(
               ...args,
               (err: Error | null, value: any) => {
                 if (err) {

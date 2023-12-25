@@ -8,11 +8,19 @@ import React, {
   createContext,
   useContext,
 } from 'react';
-import Web3Modal from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3 from 'web3';
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
 import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
+import { polygon, polygonMumbai, mainnet, goerli } from 'wagmi/chains';
+
+export interface Web3MetadataConfig {
+  name?: string;
+  description?: string;
+  url?: string;
+  icons?: string[];
+  verifyUrl?: string;
+}
 
 interface Web3Context {
   web3: Web3 | null;
@@ -76,32 +84,20 @@ interface Web3RpcUrls {
   [chain: number]: string;
 }
 
-const createWeb3Modal = (urls: Web3RpcUrls) =>
-  typeof window !== 'undefined'
-    ? new Web3Modal({
-        cacheProvider: true,
-        providerOptions: {
-          walletconnect: {
-            package: WalletConnectProvider,
-            options: {
-              rpc: urls,
-            },
-          },
-        },
-        disableInjectedProvider: false,
-      })
-    : null;
-
 interface Web3ProviderProps {
   provider?: (chainId: number) => any;
   defaultChain?: number;
   urls: Web3RpcUrls;
+  projectId: string;
+  metadata: Web3MetadataConfig;
 }
 
 const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   provider,
   defaultChain,
   urls,
+  projectId,
+  metadata,
   children,
 }) => {
   defaultChain = defaultChain ? Number(defaultChain) : undefined;
@@ -111,7 +107,15 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [networkId, setNetworkId] = useState<number | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const web3Modal = useMemo(() => createWeb3Modal(urls), []);
+  const chains = useMemo(() => [polygon, polygonMumbai, mainnet, goerli], []);
+  const wagmiConfig = useMemo(
+    () => defaultWagmiConfig({ chains, projectId, metadata }),
+    [chains, projectId, metadata]
+  );
+  const web3Modal = useMemo(
+    () => createWeb3Modal({ wagmiConfig, projectId, chains }),
+    [wagmiConfig, projectId, chains]
+  );
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
 
@@ -182,12 +186,11 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
       );
     }
 
-    const provider = await web3Modal.connect();
-    if (!provider) {
-      return;
-    }
+    await web3Modal.open();
 
-    const web3 = new Web3(provider);
+    const web3 = new Web3(
+      wagmiConfig.getPublicClient({ chainId: defaultChain })
+    );
     setWeb3(web3);
 
     await subscribe(provider, web3);
@@ -209,7 +212,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     }
 
     const immediate = setImmediate(() => {
-      if (web3Modal && web3Modal.cachedProvider) {
+      if (web3Modal) {
         connect();
       }
     });
@@ -220,7 +223,6 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   }, [web3Modal, connect, connected]);
 
   const disconnect = useCallback(async () => {
-    web3Modal?.clearCachedProvider?.();
     reset();
   }, [web3Modal, web3, reset]);
 

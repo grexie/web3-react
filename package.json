@@ -1,6 +1,6 @@
 {
   "name": "@grexie/web3-react",
-  "version": "0.1.13",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": "github:grexie/web3-react",
   "main": "lib/cjs/index.js",
@@ -18,13 +18,15 @@
     "@types/events": "^3.0.0",
     "@types/react": ">=16.8.0",
     "react": ">=16.8.0",
-    "typescript": "^4.6.2"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@grexie/compose": ">=0.1.7",
     "@grexie/refetch": ">=0.1.3",
-    "@walletconnect/web3-provider": ">=1.7.4",
-    "web3": ">=1.7.1",
-    "web3modal": ">=1.9.5"
+    "@wagmi/core": "^1.4.12",
+    "@web3modal/wagmi": "^3.5.2",
+    "viem": "^1.21.0",
+    "wagmi": "^1.4.12",
+    "web3": ">=1.7.1"
   }
 }
