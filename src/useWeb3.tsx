@@ -9,10 +9,8 @@ import React, {
   useContext,
 } from 'react';
 import Web3 from 'web3';
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
 import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
-import { polygon, mainnet } from 'wagmi/chains';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 export interface Web3MetadataConfig {
@@ -98,7 +96,6 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   defaultChain,
   urls,
   projectId,
-  metadata,
   children,
 }) => {
   defaultChain = defaultChain ? Number(defaultChain) : undefined;
@@ -108,15 +105,6 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [networkId, setNetworkId] = useState<number | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const chains = useMemo(() => [polygon, mainnet], []);
-  const wagmiConfig = useMemo(
-    () => defaultWagmiConfig({ chains, projectId, metadata }),
-    [chains, projectId, metadata]
-  );
-  const web3Modal = useMemo(
-    () => createWeb3Modal({ wagmiConfig, projectId, chains }),
-    [wagmiConfig, projectId, chains]
-  );
 
   const batchRequestQueue = useMemo(() => new BatchRequestQueue(), []);
 
@@ -181,17 +169,10 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   );
 
   const connect = useCallback(async () => {
-    if (!web3Modal) {
-      throw new Error(
-        'Web3Modal not instantiated, are you running in a browser?'
-      );
-    }
-
-    await web3Modal.open();
     const provider = await EthereumProvider.init({
       projectId,
-      chains: chains.map(chain => chain.id),
-      optionalChains: [0],
+      chains: Object.keys(urls).map(x => Number(x)),
+      optionalChains: [] as any,
       showQrModal: true,
       rpcMap: urls as any,
     });
@@ -200,7 +181,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     setWeb3(web3);
 
     await subscribe(provider, web3);
-  }, [web3Modal, subscribe, connected]);
+  }, [subscribe, connected]);
 
   useEffect(() => {
     let canceller = { cancel: false };
