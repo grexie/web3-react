@@ -11,7 +11,7 @@ import React, {
 import Web3 from 'web3';
 import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
-import { EthereumProvider } from '@walletconnect/ethereum-provider';
+import { useWeb3Modal, useWeb3ModalProvider } from '@web3modal/ethers5/react';
 
 export interface Web3Metadata {
   name: string;
@@ -99,6 +99,8 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   children,
 }) => {
   defaultChain = defaultChain ? Number(defaultChain) : undefined;
+  const web3Modal = useWeb3Modal();
+  const { walletProvider } = useWeb3ModalProvider();
 
   const [account, setAccount] = useState<string | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
@@ -169,16 +171,8 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   );
 
   const connect = useCallback(async () => {
-    const provider = await EthereumProvider.init({
-      projectId,
-      metadata,
-      chains: [defaultChain!],
-      optionalChains: Object.keys(urls).map(x => Number(x)),
-      showQrModal: false,
-      rpcMap: urls as any,
-    });
-    await provider.enable();
-    const web3 = new Web3(provider);
+    await web3Modal.open();
+    const web3 = new Web3(walletProvider);
     setWeb3(web3);
 
     await subscribe(provider, web3);
