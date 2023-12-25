@@ -162,8 +162,8 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const connect = useCallback(async () => {
     const provider = await EthereumProvider.init({
       projectId,
-      chains: Object.keys(urls).map(x => Number(x)),
-      optionalChains: [] as any,
+      chains: [defaultChain!],
+      optionalChains: Object.keys(urls).map(x => Number(x)),
       showQrModal: true,
       rpcMap: urls as any,
     });
