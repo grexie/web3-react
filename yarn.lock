@@ -1340,6 +1340,11 @@
     "@web3modal/wallet" "3.5.2"
     valtio "1.11.2"
 
+"@web3modal/ethereum@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@web3modal/ethereum/-/ethereum-2.7.1.tgz#464dbc1d00d075c16961b77e9a353b1966538653"
+  integrity sha512-1x3qhYh9qgtvw1MDQD4VeDf2ZOsVANKRPtUty4lF+N4L8xnAIwvNKUAMA4j6T5xSsjqUfq5Tdy5mYsNxLmsWMA==
+
 "@web3modal/polyfills@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@web3modal/polyfills/-/polyfills-3.5.2.tgz#0d2257f60c0cf0ccf3fc97d11cd9e3bb27934970"

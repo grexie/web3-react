@@ -12,7 +12,8 @@ import Web3 from 'web3';
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
 import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
-import { polygon, polygonMumbai, mainnet, goerli } from 'wagmi/chains';
+import { polygon, mainnet } from 'wagmi/chains';
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 export interface Web3MetadataConfig {
   name?: string;
@@ -107,7 +108,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
   const [networkId, setNetworkId] = useState<number | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const chains = useMemo(() => [polygon, polygonMumbai, mainnet, goerli], []);
+  const chains = useMemo(() => [polygon, mainnet], []);
   const wagmiConfig = useMemo(
     () => defaultWagmiConfig({ chains, projectId, metadata }),
     [chains, projectId, metadata]
@@ -187,10 +188,15 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     }
 
     await web3Modal.open();
-
-    const web3 = new Web3(
-      wagmiConfig.getPublicClient({ chainId: defaultChain })
-    );
+    const provider = await EthereumProvider.init({
+      projectId,
+      chains: chains.map(chain => chain.id),
+      optionalChains: [0],
+      showQrModal: true,
+      rpcMap: urls as any,
+    });
+    await provider.enable();
+    const web3 = new Web3(provider);
     setWeb3(web3);
 
     await subscribe(provider, web3);
