@@ -1,6 +1,6 @@
 {
   "name": "@grexie/web3-react",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "repository": "github:grexie/web3-react",
   "module": "lib/esm/index.js",
