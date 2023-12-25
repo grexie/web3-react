@@ -173,7 +173,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
       projectId,
       chains: Object.keys(urls).map(x => Number(x)),
       optionalChains: [] as any,
-      showQrModal: true,
+      showQrModal: false,
       rpcMap: urls as any,
     });
     await provider.enable();
@@ -199,19 +199,17 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
     }
 
     const immediate = setImmediate(() => {
-      if (web3Modal) {
-        connect();
-      }
+      connect();
     });
 
     return () => {
       clearImmediate(immediate);
     };
-  }, [web3Modal, connect, connected]);
+  }, [connect, connected]);
 
   const disconnect = useCallback(async () => {
     reset();
-  }, [web3Modal, web3, reset]);
+  }, [web3, reset]);
 
   useEffect(() => {
     if (web3) {
