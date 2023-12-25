@@ -1331,13 +1331,6 @@
   dependencies:
     dayjs "1.11.10"
 
-"@web3modal/common@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/common/-/common-3.6.0-dd04125d.tgz#a862aaf6a4b2d85178711f899f0a29e476d41699"
-  integrity sha512-PF9UI7cBZKkBIHxhSAnOq7v/0uLrexpOQdrwHK/mzOm0y/UkHpjpV4V3Yd+sJ9mcbF65S1BDFOoXWQAz3Rv2sA==
-  dependencies:
-    dayjs "1.11.10"
-
 "@web3modal/core@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@web3modal/core/-/core-3.5.2.tgz#0022c3b14615a631acf2ccfa41d4d8f2416318f1"
@@ -1345,14 +1338,6 @@
   dependencies:
     "@web3modal/common" "3.5.2"
     "@web3modal/wallet" "3.5.2"
-    valtio "1.11.2"
-
-"@web3modal/core@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/core/-/core-3.6.0-dd04125d.tgz#5232a2558e3c9aca4a236cf60f35e9f2f28bbd9a"
-  integrity sha512-JKazEHFO27sjCx+IS2kAJHQYzIXhXbda5iV0imBY5zlOEbTwziZh35cyN8j4VrfZcR6xX83w+OQae5v40QqEJQ==
-  dependencies:
-    "@web3modal/common" "3.6.0-dd04125d"
     valtio "1.11.2"
 
 "@web3modal/ethereum@^2.7.1":
@@ -1386,13 +1371,6 @@
   dependencies:
     buffer "6.0.3"
 
-"@web3modal/polyfills@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/polyfills/-/polyfills-3.6.0-dd04125d.tgz#feab23ee6c5157189381a173041734d27861def8"
-  integrity sha512-I5n7lxAqPj5JUS2k/LK8hw6tNjTwKeC/wB6hQ89Pcou0V9sna6FBiDBW4xuM6AHfGaN4np5DLWQtAtEd7FChgA==
-  dependencies:
-    buffer "6.0.3"
-
 "@web3modal/scaffold-react@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@web3modal/scaffold-react/-/scaffold-react-3.5.2.tgz#80bd7c305f27854c3c3c7fd3e942ec037ffcd5f5"
@@ -1407,15 +1385,6 @@
   dependencies:
     "@web3modal/polyfills" "3.5.2"
     "@web3modal/scaffold" "3.5.2"
-    valtio "1.11.2"
-
-"@web3modal/scaffold-utils@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/scaffold-utils/-/scaffold-utils-3.6.0-dd04125d.tgz#0d88a59f84a5e40e97e5949ac9bb195fdf40c1c8"
-  integrity sha512-5PTJDtfoNiwqq1UXxS426jV6Dj2Rzu5JfPAKZNUF4Johrdi9gES/G5crEiX8Lpus5L6U3o+Hk47ieA7NLn9/Kw==
-  dependencies:
-    "@web3modal/polyfills" "3.6.0-dd04125d"
-    "@web3modal/scaffold" "3.6.0-dd04125d"
     valtio "1.11.2"
 
 "@web3modal/scaffold-vue@3.5.2":
@@ -1435,16 +1404,7 @@
     "@web3modal/ui" "3.5.2"
     lit "3.1.0"
 
-"@web3modal/scaffold@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/scaffold/-/scaffold-3.6.0-dd04125d.tgz#e5eadc7f5fcdf1a9ebe73e9ec01b2d3e8cd2fbb0"
-  integrity sha512-X5lSd2h9IdBzd22pec3roZvRc3+2bWYMh03ifF8gDZkrVbbGTAnnykKb1/rjP7IYbIZ7DVr/4xzsCSzyPpn29Q==
-  dependencies:
-    "@web3modal/core" "3.6.0-dd04125d"
-    "@web3modal/ui" "3.6.0-dd04125d"
-    lit "3.1.0"
-
-"@web3modal/siwe@*":
+"@web3modal/siwe@*", "@web3modal/siwe@3.5.0-6a05dc24", "@web3modal/siwe@^3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@web3modal/siwe/-/siwe-3.5.2.tgz#dabfcbe02514a0e5a79b5d4486aef915fb576df9"
   integrity sha512-PT6/V/cvUNkt3KNQ4b6biTqWKqXVVwrhodRU5GaUtls/tYv/lIFjk3Y50tivj9UK6kW9NX/XH9SO2xl8ob3VsA==
@@ -1456,30 +1416,10 @@
     react-dom ">=17"
     vue ">=3"
 
-"@web3modal/siwe@3.5.0-6a05dc24":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/siwe/-/siwe-3.6.0-dd04125d.tgz#40a84e75af952b47761d159086904692d4f7486c"
-  integrity sha512-v9ZO8L3q81qmuSJfzm9/GMqAmh7iRXe0XGbWRm+ibdxqjxokH+4nS/WiwogcqAO/5h+f7tjSGAAtGTh2xvum8A==
-  dependencies:
-    "@web3modal/core" "3.6.0-dd04125d"
-    "@web3modal/scaffold-utils" "3.6.0-dd04125d"
-  optionalDependencies:
-    react ">=17"
-    react-dom ">=17"
-    vue ">=3"
-
 "@web3modal/ui@3.5.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@web3modal/ui/-/ui-3.5.2.tgz#2d061e357b941174695f4b1f3bca73f0732e95a4"
   integrity sha512-2jsv1SlESWUE1MGn3XzhoneuVnOIZ3bH6bGRs62gqCPnH2xBqdT7W3M6833mKd5UbZ/O/pEC5gU+sBmP+9kigw==
-  dependencies:
-    lit "3.1.0"
-    qrcode "1.5.3"
-
-"@web3modal/ui@3.6.0-dd04125d":
-  version "3.6.0-dd04125d"
-  resolved "https://registry.yarnpkg.com/@web3modal/ui/-/ui-3.6.0-dd04125d.tgz#8071b5e6d769104720e3919295f9da6750f3cf84"
-  integrity sha512-nO1dcMBtlXkq9mB8sH0Q0e/5NzpA09KKIgaw7frSXnUEPCi4CaUw8yYU0q7OeUCPu2PuLjB7ZVnI0OC42rkFsw==
   dependencies:
     lit "3.1.0"
     qrcode "1.5.3"
