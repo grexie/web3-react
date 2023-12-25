@@ -13,14 +13,6 @@ import { Method as Web3Method } from 'web3-core-method';
 import { createComposableWithProps } from '@grexie/compose';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
-export interface Web3MetadataConfig {
-  name?: string;
-  description?: string;
-  url?: string;
-  icons?: string[];
-  verifyUrl?: string;
-}
-
 interface Web3Context {
   web3: Web3 | null;
   connect: () => Promise<void>;
@@ -88,7 +80,6 @@ interface Web3ProviderProps {
   defaultChain?: number;
   urls: Web3RpcUrls;
   projectId: string;
-  metadata: Web3MetadataConfig;
 }
 
 const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
@@ -173,7 +164,7 @@ const Web3Provider: FC<PropsWithChildren<Web3ProviderProps>> = ({
       projectId,
       chains: Object.keys(urls).map(x => Number(x)),
       optionalChains: [] as any,
-      showQrModal: false,
+      showQrModal: true,
       rpcMap: urls as any,
     });
     await provider.enable();
